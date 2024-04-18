@@ -28,7 +28,7 @@ pipeline {
         stage('Deployment') {
             steps {
                 echo "Im on deployment phase ..."
-                sh 'sudo cp dist/browser/* /var/www/html'
+                sh 'sudo cp dist/test_jekins/browser/* /var/www/html'
             }
         }
     }
