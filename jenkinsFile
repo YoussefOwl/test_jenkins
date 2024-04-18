@@ -31,15 +31,5 @@ pipeline {
                 sh 'sudo cp dist/browser/* /var/www/html'
             }
         }
-        stage('Changing group') {
-            steps {
-                sh 'sudo chown www-data: /var/www/html/'
-            }
-        }
-        stage('Changing privileges') {
-            steps {
-                sh 'sudo chmod -R 755 /var/www/html/'
-            }
-        }
     }
 }
