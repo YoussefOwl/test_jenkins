@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout Code') {
+            steps {
+                // Use git checkout to specify the branch or commit you want to checkout
+                checkout scm // Replace 'master' with your desired branch
+            }
+        }
+        stage('Init') {
+            steps {
+                echo "Im on init project ..."
+                sh 'npm install'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo "Im on build project ..."
+                sh 'npm run build --prod'
+            }
+        }
+        stage('Remove old code') {
+            steps {
+                echo "Im on removing old code ..."
+                sh 'sudo rm -rf /var/www/html/*'
+            }
+        }
+        stage('Deployment') {
+            steps {
+                echo "Im on deployment phase ..."
+                sh 'sudo cp dist/browser/* /var/www/html'
+            }
+        }
+        stage('Changing group') {
+            steps {
+                sh 'sudo chown www-data: /var/www/html/'
+            }
+        }
+        stage('Changing privileges') {
+            steps {
+                sh 'sudo chmod -R 755 /var/www/html/'
+            }
+        }
+    }
+}
